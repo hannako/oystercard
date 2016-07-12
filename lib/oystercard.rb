@@ -13,10 +13,14 @@ class Oystercard
     self.balance += money
   end
 
+  def deduct(fare)
+    self.balance -= fare
+  end
+  
   private
 
   def full? top_up_amount
     self.balance + top_up_amount > 90
-  end
-
-end
+  end  
+  
+end  
