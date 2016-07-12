@@ -32,8 +32,19 @@ describe Oystercard do
     end
 
     it ' verifies journey' do
-
-      expect(subject.touch_in).to eq true
+      subject.touch_in
+      expect(subject.in_journey).to eq true
     end
+
+    it 'responds with journey status' do
+      expect(subject.in_journey?).to eq false
+    end
+
+   it 'allows touch out' do
+     subject.in_journey = true
+     subject.touch_out
+     expect(subject.in_journey).to eq false
+   end
+
   end
 end
