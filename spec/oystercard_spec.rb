@@ -17,7 +17,7 @@ describe Oystercard do
       subject.top_up max_limit
       expect{ subject.top_up 1 }.to raise_error "Maximum balance of £#{max_limit} exceeded"
     end
-    
+
     it 'allows you to deduct from the balance' do
       subject.top_up(10)
       fare = 5
@@ -25,4 +25,15 @@ describe Oystercard do
     end
   end
 
+  describe ' Journey ' do
+
+    it 'allows touch in' do
+      expect(subject).to respond_to :touch_in
+    end
+
+    it ' verifies journey' do
+
+      expect(subject.touch_in).to eq true
+    end
+  end
 end

@@ -16,11 +16,15 @@ class Oystercard
   def deduct(fare)
     self.balance -= fare
   end
-  
+
+  def touch_in
+    in_journey = true
+  end
+
   private
 
   def full? top_up_amount
     self.balance + top_up_amount > 90
-  end  
-  
-end  
+  end
+
+end
