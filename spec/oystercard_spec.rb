@@ -10,10 +10,6 @@ describe Oystercard do
     expect(subject).to respond_to :balance
     end
 
-    it 'tops up' do
-      expect(subject).to respond_to(:top_up).with(1).argument
-    end
-
     it 'has an upper limit' do
       max_limit = Oystercard::MAX_LIMIT
       subject.top_up max_limit
@@ -23,6 +19,8 @@ describe Oystercard do
   describe ' Journey ' do
 
     let(:station) { double :station }
+    let(:entry_station) {double :entry_station}
+    let(:exit_station) {double :exit_station}
 
     it 'allows touch in' do
       subject.top_up(fare)
@@ -41,18 +39,18 @@ describe Oystercard do
     end
 
     it 'allows touch out' do
-     subject.touch_out
+     subject.touch_out(exit_station)
      expect(subject.in_journey?).to eq false
    end
 
     it 'allows touch out' do
-      subject.touch_out
+      subject.touch_out(exit_station)
         expect(subject.in_journey?).to eq false
     end
 
    it 'deducts fare from balance' do
      subject.balance = minimum_balance
-     expect { subject.touch_out }.to change{ subject.balance }.by (-1)
+     expect { subject.touch_out(exit_station) }.to change{ subject.balance }.by (-1)
    end
 
    it 'remembers the entry station when touches in' do
@@ -60,6 +58,22 @@ describe Oystercard do
      subject.touch_in(station)
      expect(subject.entry_station).to eq station
    end
+
+  end
+
+  describe 'provides travel information' do
+
+    let(:station) { double :station }
+    let(:entry_station) {double :entry_station}
+    let(:exit_station) {double :exit_station}
+
+    it 'stores journey details' do
+      subject.top_up(minimum_balance)
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
+      journeys = Hash.new
+      expect(journeys).to include( entry_station => exit_station)
+    end
 
   end
 end
