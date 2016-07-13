@@ -22,33 +22,43 @@ describe Oystercard do
 
   describe ' Journey ' do
 
+    let(:station) { double :station }
+
     it 'allows touch in' do
-      expect(subject).to respond_to :touch_in
+      subject.top_up(fare)
+      subject.touch_in(station)
+        expect(subject.in_journey?).to eq true
     end
 
     it 'refuses touch in if balance low' do
-      expect{subject.touch_in}.to raise_error "Insufficient funds"
+      expect{subject.touch_in(station)}.to raise_error "Insufficient funds"
     end
 
     it ' verifies journey' do
       subject.balance = minimum_balance
-      subject.touch_in
-      expect(subject.in_journey).to eq true
+      subject.touch_in(station)
+      expect(subject.in_journey?).to eq true
     end
 
-    it 'responds with journey status' do
-      expect(subject.in_journey?).to eq false
-    end
-
-   it 'allows touch out' do
-     subject.in_journey = true
+    it 'allows touch out' do
      subject.touch_out
-     expect(subject.in_journey).to eq false
+     expect(subject.in_journey?).to eq false
    end
+
+    it 'allows touch out' do
+      subject.touch_out
+        expect(subject.in_journey?).to eq false
+    end
 
    it 'deducts fare from balance' do
      subject.balance = minimum_balance
      expect { subject.touch_out }.to change{ subject.balance }.by (-1)
+   end
+
+   it 'remembers the entry station when touches in' do
+     subject.top_up(minimum_balance)
+     subject.touch_in(station)
+     expect(subject.entry_station).to eq station
    end
 
   end
