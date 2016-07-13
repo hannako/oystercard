@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   minimum_balance = Oystercard::MINIMUM_BALANCE
+  fare = Oystercard::FARE
 
   describe 'Oystercard transactions' do
 
@@ -21,8 +22,7 @@ describe Oystercard do
 
     it 'allows you to deduct from the balance' do
       subject.top_up(10)
-      fare = 5
-      expect{ subject.deduct(3) }.to change{ subject.balance }.by -3
+      expect{ subject.touch_out }.to change{ subject.balance }.by -1
     end
   end
 
@@ -31,7 +31,7 @@ describe Oystercard do
     it 'allows touch in' do
       expect(subject).to respond_to :touch_in
     end
-    
+
     it 'refuses touch in if balance low' do
       expect{subject.touch_in}.to raise_error "Insufficient funds"
     end
@@ -48,8 +48,13 @@ describe Oystercard do
 
    it 'allows touch out' do
      subject.in_journey = true
-     subject.touch_out
+     subject.touch_out(fare)
      expect(subject.in_journey).to eq false
+   end
+
+   it 'deducts fare from balance' do
+     subject.balance = minimum_balance
+     expect { subject.touch_out(fare) }.to change{ subject.balance }.by (-1)
    end
 
   end
