@@ -22,8 +22,8 @@ class Oystercard
     self.in_journey = true
   end
 
-  def touch_out(fare = FARE)
-    deduct(fare)
+  def touch_out
+    deduct(FARE)
     self.in_journey = false
   end
 
@@ -31,8 +31,7 @@ class Oystercard
     in_journey
   end
 
-
-  private
+private
 
   def full? top_up_amount
     self.balance + top_up_amount > 90
