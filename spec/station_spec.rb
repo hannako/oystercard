@@ -10,7 +10,6 @@ require 'station'
 
     it'knows what zone it is in' do
       expect(subject.zone).to eq 1
-
     end
 
   end
