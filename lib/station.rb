@@ -1,19 +1,9 @@
-require 'csv'
-
 class Station
 
-@network = {:oval => 'zone 1', :dalston => 'zone 2', :elephant => 'zone 3', :manorhouse => 'zone 4'}
+  attr_reader :name, :zone
 
-  def initialize(station_name)
-    @network
-    @station = station_name.to_sym
+  def initialize(name: "oval",zone: 3)
+    @name = name
+    @zone = zone
   end
-
-  def zone?
-    @stations[@station]
-  end
-
-
-
-
 end

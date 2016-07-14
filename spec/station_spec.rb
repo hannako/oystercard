@@ -1,10 +1,16 @@
 require 'station'
 
-describe Station do
+  describe Station do
 
-it "is situated in a zone" do
+    subject {described_class.new(name:"Old Street",zone:1)}
 
-  expect(subject).to respond_to :zone
+    it 'knows what its name is' do
+      expect(subject.name).to eq "Old Street"
+    end
 
-end
-end
+    it'knows what zone it is in' do
+      expect(subject.zone).to eq 1
+
+    end
+
+  end
