@@ -1,11 +1,9 @@
-require_relative 'oystercard'
-
 class Journey
 
   MINIMUM_FARE = 1
   PENALTY_FARE = 6
 
-  attr_accessor :oystercard, :entry_station, :exit_station, :journeys
+  attr_accessor :entry_station, :exit_station
 
   def initialize(entry_station = nil)
     @entry_station = entry_station
