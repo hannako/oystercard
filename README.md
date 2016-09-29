@@ -6,7 +6,8 @@ Code Design, Ruby, RSpec and Object-Oriented Programming.
 
 ## User Stories
 
-```In order to use public transport
+```
+In order to use public transport
 As a customer
 I want money on my card
 
